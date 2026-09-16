@@ -1,0 +1,27 @@
+{
+  "name": "varun_verma_poornimaunversity_15118",
+  "version": "1.0.0",
+  "description": "",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Varunv185/Varun_verma_poornimaUnversity_15118.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Varunv185/Varun_verma_poornimaUnversity_15118/issues"
+  },
+  "homepage": "https://github.com/Varunv185/Varun_verma_poornimaUnversity_15118#readme",
+  "dependencies": {
+    "express": "^5.2.1",
+    "socket.io": "^4.8.3",
+    "sqlite": "^5.1.1",
+    "sqlite3": "^6.0.1"
+  }
+}

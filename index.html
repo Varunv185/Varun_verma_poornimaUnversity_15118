@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gift Dashboard</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎁</text></svg>">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- TOP FILE BAR -->
+    <div class="file-bar">
+        <div class="file-inputs">
+            <i class="fa-solid fa-folder-open text-primary"></i>
+            <label>Current Pool File:</label>
+            <input type="text" id="poolIdInput" placeholder="e.g., Alice-Farewell" value="Test-Pool">
+            <button onclick="loadPool()" class="btn-primary" style="padding: 8px 15px;">Open / Create</button>
+        </div>
+        <button onclick="openPoolsModal()" class="btn-primary" style="background-color: var(--sidebar-bg);">
+            <i class="fa-solid fa-layer-group"></i> View All Dashboards
+        </button>
+    </div>
+
+    <!-- POOL LIBRARY MODAL (Hidden) -->
+    <div id="poolsModal" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>📁 My Previous Pools</h2>
+                <button onclick="closeModal()" class="btn-icon-dark" style="color: var(--text-main);"><i class="fa-solid fa-xmark fa-xl"></i></button>
+            </div>
+            <div class="modal-body" id="poolsGrid"></div>
+        </div>
+    </div>
+
+    <!-- SMART IMPORT MODAL (Hidden) -->
+    <div id="importModal" class="modal-overlay" style="display: none;">
+        <div class="modal-content" style="width: 600px;">
+            <div class="modal-header">
+                <h2><i class="fa-solid fa-wand-magic-sparkles text-primary"></i> Smart Data Importer</h2>
+                <button onclick="closeImportModal()" class="btn-icon-dark" style="color: var(--text-main);"><i class="fa-solid fa-xmark fa-xl"></i></button>
+            </div>
+            <div class="modal-body">
+                <p style="color: var(--text-muted); margin-top: 0;">Paste a messy list (Format: <b>Name, Amount</b>). We will automatically clean names, parse numbers, merge duplicates, and reject bad data.</p>
+                <textarea id="importTextarea" rows="8" style="width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 8px; font-family: monospace; box-sizing: border-box;" placeholder="Alice, ₹1,000&#10;b.o.b., 500&#10;Alice, 1000"></textarea>
+                
+                <button onclick="processImport()" class="btn-primary w-100" style="margin-top: 15px;">Clean & Import Data</button>
+                
+                <div id="importReport"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="app-layout">
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <div class="brand"><i class="fa-solid fa-gift"></i> GiftPool</div>
+            <div class="sidebar-section">
+                <h4 class="sidebar-title">Pool Progress</h4>
+                <div class="progress-labels">
+                    <span id="progressText">0% Collected</span>
+                    <span id="progressAmount">₹0 / ₹6000</span>
+                </div>
+                <div class="progress-bar-container"><div class="progress-bar" id="progressBar"></div></div>
+            </div>
+            <div class="sidebar-section list-section">
+                <h4 class="sidebar-title">Current Participants (<span id="participantCount">0</span>)</h4>
+                <ul id="participantList" class="sidebar-list"></ul>
+            </div>
+            <button onclick="resetPool()" class="btn-danger w-100 mt-auto">
+                <i class="fa-solid fa-trash-rotate"></i> Clear Current Pool
+            </button>
+        </aside>
+
+        <!-- MAIN WORKSPACE -->
+        <main class="main-content">
+            <header class="topbar">
+                <h2>Dashboard Overview</h2>
+                <div class="budget-setter">
+                    <label>Target Budget:</label>
+                    <div class="input-icon-wrapper">
+                        <i class="fa-solid fa-indian-rupee-sign icon"></i>
+                        <input type="number" id="budgetInput" value="6000" onchange="updateBudget()">
+                    </div>
+                </div>
+            </header>
+
+            <div class="action-panel card">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <h3 style="margin: 0;"><i class="fa-solid fa-bolt text-warning"></i> Quick Add</h3>
+                    <button onclick="openImportModal()" class="btn-primary" style="background-color: var(--sidebar-bg); padding: 8px 15px; font-size: 0.9rem;">
+                        <i class="fa-solid fa-file-import"></i> Paste Bulk Data
+                    </button>
+                </div>
+                
+                <div class="add-form">
+                    <input type="text" id="nameInput" placeholder="Participant Name">
+                    <input type="number" id="paidInput" placeholder="Amount Paid (₹)">
+                    <button onclick="addParticipant()" class="btn-primary">Add to Pool</button>
+                </div>
+            </div>
+
+            <div class="results-grid">
+                <div class="result-card card">
+                    <h3><i class="fa-solid fa-scale-balanced text-primary"></i> Individual Balances</h3>
+                    <div id="individualBalances" class="data-box">Waiting for data...</div>
+                </div>
+                
+                <div class="result-card card highlight-card">
+                    <h3><i class="fa-solid fa-handshake text-success"></i> Settlement Plan</h3>
+                    <div id="settlementPlan" class="data-box">Waiting for data...</div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script type="module" src="script.js"></script>
+</body>
+</html>
